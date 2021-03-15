@@ -1,6 +1,6 @@
 const Users = require('../model/users')
 const { httpCode } = require('../model/helpers/constants')
-const fs = require('fs').promises
+const fs = require('fs/promises')
 const path = require('path')
 const Jimp = require('jimp')
 require('dotenv').config()
@@ -26,7 +26,6 @@ const avatars = async (req, res, next) => {
     try {
         const id = req.user.id
         const avatarUrl = await saveAvatarToStatic(req)
-
         await Users.updateAvatar(id, avatarUrl)
         return res.json({
             status: 'success',
@@ -55,7 +54,6 @@ const saveAvatarToStatic = async (req) => {
         .writeAsync(pathFile)
     await createFolderIfNotExists(path.join(AVATARS_OF_USERS, id))
     await fs.rename(pathFile, path.join(AVATARS_OF_USERS, id, newNameAvatar))
-
     try {
         await fs.unlink(path.join(process.cwd(), AVATARS_OF_USERS, req.user.avatar))
     } catch (e) {
@@ -63,7 +61,12 @@ const saveAvatarToStatic = async (req) => {
     }
     return path.normalize(path.join(id, newNameAvatar))
 }
+
+const hello = (name) => {
+    return name
+}
 module.exports = {
     currentUser,
-    avatars
+    avatars,
+    hello
 }
