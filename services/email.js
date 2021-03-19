@@ -2,7 +2,6 @@ const sgMail = require('@sendgrid/mail');
 const Mailgen = require('mailgen')
 const config = require('../config/email.json')
 require('dotenv').config()
-
 class EmailService {
     #sender = sgMail
     #GenerateTemplate = Mailgen
