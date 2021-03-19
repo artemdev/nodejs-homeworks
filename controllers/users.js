@@ -1,5 +1,6 @@
 const Users = require('../model/users')
 const { httpCode } = require('../model/helpers/constants')
+const { send } = require('../services/email.js')
 const fs = require('fs/promises')
 const path = require('path')
 const Jimp = require('jimp')
@@ -39,6 +40,7 @@ const avatars = async (req, res, next) => {
     }
 }
 
+
 const saveAvatarToStatic = async (req) => {
     const id = req.user.id
     const AVATARS_OF_USERS = process.env.AVATARS_OF_USERS
@@ -62,11 +64,19 @@ const saveAvatarToStatic = async (req) => {
     return path.normalize(path.join(id, newNameAvatar))
 }
 
-const hello = (name) => {
-    return name
+const sendEmail = async (req, res, next) => {
+
+    try {
+        const emailSent = await send()
+        return res.status(httpCode.OK).json({
+            data: { emailSent }
+        })
+    } catch (error) {
+        next(error)
+    }
 }
 module.exports = {
     currentUser,
     avatars,
-    hello
+    sendEmail
 }
