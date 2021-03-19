@@ -1,7 +1,7 @@
 const Sex = {
     MALE: 'male',
     FEMALE: 'female',
-    NONE: 'none'
+    NONE: 'none',
 }
 
 const httpCode = {
@@ -14,10 +14,10 @@ const httpCode = {
     CONFLICT: 409,
     CREATE: 201,
     NOCONTENT: 204,
-    BADREQUEST: 400
+    BADREQUEST: 400,
 }
 
 module.exports = {
     Sex,
-    httpCode
+    httpCode,
 }

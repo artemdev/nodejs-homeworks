@@ -9,21 +9,19 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname)
-    }
+    },
 })
 
-var upload = multer(
-    {
-        storage: storage,
-        limits: { fileSize: 2000000 },
-        fileFilter: (req, file, cb) => {
-            if (file.mimetype.includes('image')) {
-                cb(null, true)
-                return
-            }
-            cb(null, false)
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: 2000000 },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.includes('image')) {
+            cb(null, true)
+            return
         }
-    })
-
+        cb(null, false)
+    },
+})
 
 module.exports = upload

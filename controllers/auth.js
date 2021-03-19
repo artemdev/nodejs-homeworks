@@ -9,14 +9,18 @@ const SECRET_KEY = process.env.JWT_SECRET
 
 const reg = async (req, res) => {
     try {
-
         const { email, name } = req.body
         const user = await Users.findByEmail(email)
 
         if (user) {
-            return res.status(httpCode.CONFLICT).json(
-                { status: 'error', code: httpCode.CONFLICT, data: 'Conflict', message: 'Email in use' }
-            )
+            return res
+                .status(httpCode.CONFLICT)
+                .json({
+                    status: 'error',
+                    code: httpCode.CONFLICT,
+                    data: 'Conflict',
+                    message: 'Email in use',
+                })
         }
         const verifyToken = nanoid()
         const emailService = new EmailService(process.env.NODE_ENV)
@@ -24,7 +28,7 @@ const reg = async (req, res) => {
         const newUser = await Users.create({
             ...req.body,
             verify: false,
-            verifyToken
+            verifyToken,
         })
         return res.status(httpCode.CREATE).json({
             status: 'success',
@@ -32,12 +36,14 @@ const reg = async (req, res) => {
             data: {
                 email: newUser.email,
                 subscription: newUser.subscription,
-                avatar: newUser.avatar
-            }
+                avatar: newUser.avatar,
+            },
         })
     } catch (e) {
         console.log(e)
-        res.status(httpCode.BADREQUEST).json({ message: "Ошибка от Joi или другой валидационной библиотеки" })
+        res.status(httpCode.BADREQUEST).json({
+            message: 'Ошибка от Joi или другой валидационной библиотеки',
+        })
     }
 }
 
@@ -50,8 +56,7 @@ const login = async (req, res) => {
             return res.status(httpCode.UNAUTHORIZED).json({
                 status: 'error',
                 code: httpCode.UNAUTHORIZED,
-                message: 'Email or password is wrong'
-
+                message: 'Email or password is wrong',
             })
         }
         const id = user._id
@@ -64,13 +69,15 @@ const login = async (req, res) => {
             data: {
                 token,
                 user: {
-                    "email": user.email,
-                    "subscription": user.subscription
-                }
-            }
+                    email: user.email,
+                    subscription: user.subscription,
+                },
+            },
         })
     } catch (e) {
-        res.status(httpCode.UNAUTHORIZED).json({ message: "Email or password is wrong" })
+        res.status(httpCode.UNAUTHORIZED).json({
+            message: 'Email or password is wrong',
+        })
     }
 }
 
@@ -80,8 +87,8 @@ const logout = async (req, res) => {
     return res.status(httpCode.NOCONTENT).json({ message: 'Nothing' })
 }
 
-
-
 module.exports = {
-    reg, login, logout
+    reg,
+    login,
+    logout,
 }

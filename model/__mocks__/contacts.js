@@ -5,7 +5,7 @@ const list = jest.fn((userId) => {
 })
 
 const findById = jest.fn((id, userId) => {
-    const [contact] = contacts.filter(el => {
+    const [contact] = contacts.filter((el) => {
         String(el._id) === String(id)
     })
     return contact

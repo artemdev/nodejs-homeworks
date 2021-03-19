@@ -1,7 +1,7 @@
 const { users } = require('./data')
 
 const findByEmail = jest.fn((id, userId) => {
-    const [contact] = users.filter(el => {
+    const [contact] = users.filter((el) => {
         String(el._id) === String(id)
     })
     return contact
@@ -13,11 +13,13 @@ const findById = jest.fn((id) => {
 })
 
 const create = jest.fn((body) => {
-    { }
+    {
+    }
 })
 
 const update = jest.fn((contactId, body, userId) => {
-    { }
+    {
+    }
 })
 
 const remove = jest.fn((id, userId) => {
@@ -37,5 +39,5 @@ module.exports = {
     remove,
     create,
     update,
-    updateAvatar
+    updateAvatar,
 }
