@@ -12,6 +12,9 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
+    "@babel/eslint-parser": "7.13.10",
+    "@babel/plugin-proposal-class-properties": "7.13.0",
+    "@babel/plugin-proposal-private-methods": "7.13.0",
     "@babel/preset-react": "^7.12.13",
     "@sendgrid/mail": "^7.4.2",
     "bcryptjs": "^2.4.3",
@@ -45,6 +48,7 @@
     "@babel/preset-stage-0": "^7.8.3",
     "ava": "^1.4.1",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.21.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -71,5 +75,21 @@
   "bugs": {
     "url": "https://github.com/artemdev/nodejs-homeworks/issues"
   },
-  "homepage": "https://github.com/artemdev/nodejs-homeworks#readme"
+  "homepage": "https://github.com/artemdev/nodejs-homeworks#readme",
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1,
+      "babel/semi": 1
+    }
+  }
 }
