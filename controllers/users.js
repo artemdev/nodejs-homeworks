@@ -41,7 +41,6 @@ const avatars = async (req, res, next) => {
     }
 }
 
-
 const saveAvatarToStatic = async (req) => {
     const id = req.user.id
     const AVATARS_OF_USERS = process.env.AVATARS_OF_USERS
@@ -76,6 +75,7 @@ const sendEmail = async (req, res, next) => {
         next(error)
     }
 }
+
 const verifyToken = async (req, res, next) => {
     try {
         const user =  await Users.findByVerifyToken(req.params.token)
@@ -98,7 +98,6 @@ const verifyToken = async (req, res, next) => {
        next(error)
    }
 }
-
 
 module.exports = {
     currentUser,
