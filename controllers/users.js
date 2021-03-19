@@ -4,6 +4,7 @@ const { send } = require('../services/email.js')
 const fs = require('fs/promises')
 const path = require('path')
 const Jimp = require('jimp')
+
 require('dotenv').config()
 const createFolderIfNotExists = require('../model/helpers/createDir')
 
@@ -75,8 +76,33 @@ const sendEmail = async (req, res, next) => {
         next(error)
     }
 }
+const verifyToken = async (req, res, next) => {
+    try {
+        const user =  await Users.findByVerifyToken(req.params.token)
+        if (user) {
+            await Users.updateVerifyToken(user.id, true, false)
+            return res.json({
+                status: 'success',
+                code: httpCode.OK,
+                message: "Verified"
+                
+            })
+        }
+        return res.status(httpCode.BADREQUEST).json({
+            status: 'Error',
+            code: httpCode.BADREQUEST,
+            data: 'Bad request',
+            message: "Link is not valid"
+        })
+   } catch (error) {
+       next(error)
+   }
+}
+
+
 module.exports = {
     currentUser,
     avatars,
-    sendEmail
+    sendEmail,
+    verifyToken
 }
