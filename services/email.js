@@ -46,7 +46,6 @@ class EmailService {
         };
         return mailGenerator.generate(template)
     }
-    
     async sendEmail(verifyToken, email, name) {
         const emailBody = this.#createTemplate(verifyToken, name)
         this.#sender.setApiKey(process.env.SENDGRID_API_KEY);
