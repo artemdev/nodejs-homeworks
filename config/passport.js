@@ -20,11 +20,8 @@ passport.use(
                 return done(null, false)
             }
             return done(null, user)
-
         } catch (error) {
             done(error)
         }
-
-
     })
 )

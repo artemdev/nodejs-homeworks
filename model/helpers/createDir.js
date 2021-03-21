@@ -1,7 +1,8 @@
 const fs = require('fs').promises
 
 const isAccessible = (path) => {
-    return fs.access(path)
+    return fs
+        .access(path)
         .then(() => true)
         .catch(() => false)
 }

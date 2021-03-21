@@ -3,40 +3,49 @@ const bcrypt = require('bcryptjs')
 const gravatar = require('gravatar')
 const SALT_WORK_FACTOR = 8
 const { Schema, model } = mongoose
-const userSchema = new Schema({
-    name: {
-        type: String,
-        minLength: 2,
-        default: "Guest"
+const userSchema = new Schema(
+    {
+        name: {
+            type: String,
+            minLength: 2,
+            default: 'Guest',
+        },
+        email: {
+            type: String,
+            required: [true, 'Email required'],
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: [true, 'Password required'],
+        },
+        token: {
+            type: String,
+            default: 'none',
+        },
+        subscription: {
+            type: String,
+            enum: ['free', 'pro', 'premium'],
+            default: 'free',
+        },
+        avatar: {
+            type: String,
+            default: function () {
+                return gravatar.url(this.email, { s: 250 }, true)
+            },
+        },
+        verify: {
+            type: Boolean,
+            default: false,
+        },
+        verifyToken: {
+            type: String,
+            required: [true, 'Verify token required'],
+        },
+        token: String,
     },
-    email: {
-        type: String,
-        required: [true, "Email required"],
-        unique: true
-    },
-    password: {
-        type: String,
-        required: [true, 'Password required']
-    },
-    token: {
-        type: String,
-        default: "none"
-    },
-    subscription: {
-        type: String,
-        enum: ["free", "pro", "premium"],
-        default: "free"
-    },
-    avatar: {
-        type: String,
-        default: function () {
-            return gravatar.url(this.email, { s: 250 }, true)
-        }
-    },
-    token: String
-}, { versionKey: false, timestamps: true })
-
-
+    { versionKey: false, timestamps: true }
+)
 
 userSchema.path('email').validate(function (value) {
     const re = /\S+@\S+\.\S+/
